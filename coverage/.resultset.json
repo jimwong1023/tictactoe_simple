@@ -1,0 +1,24 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/Jimbo/rails_projects/tictacs/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/Jimbo/rails_projects/tictacs/app/models/player.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        0,
+        0,
+        0,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1406159848
+  }
+}
