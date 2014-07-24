@@ -13,12 +13,17 @@ gem 'pry-rails'
 gem 'rails_12factor'
 
 group :test do
-  gem 'factory_girl_rails', '4.1.0'
+  gem 'factory_girl_rails'
   gem 'capybara', '1.1.2'
   gem 'database_cleaner', '0.7.0'
   gem 'shoulda-matchers'
+  gem 'selenium-webdriver'
+  gem 'faker'
+  gem 'launchy'
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'debugger'
+  gem 'simplecov', :require => false
 end

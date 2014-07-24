@@ -1,0 +1,77 @@
+/* General */
+
+.hidden {
+	display: none;
+}
+
+/* Board */
+
+#board {
+	width: 600px;
+	height: 600px;
+	margin-left: 500px;
+	margin-top: 100px;
+}
+
+.square {
+	display: inline-block;
+	text-align: center;
+	line-height: 180px;
+	vertical-align: middle;
+	font-size: 45pt;
+	margin: 0;
+	padding: 0;
+	height: 180px;
+	width: 180px;
+}
+
+#top-left {
+	border-bottom: 10px solid;
+	border-right: 10px solid;
+}
+
+#top-mid {
+	border-bottom: 10px solid;
+	border-right: 10px solid;
+	border-left: 10px solid;
+}
+
+#top-right {
+	border-bottom: 10px solid;
+	border-left: 10px solid;
+}
+
+#mid-left {
+	border-bottom: 10px solid;
+	border-right: 10px solid;
+	border-top: 10px solid;
+}
+
+#mid-mid {
+	border-bottom: 10px solid;
+	border-top: 10px solid;
+	border-right: 10px solid;
+	border-left: 10px solid;
+}
+
+#mid-right {
+	border-bottom: 10px solid;
+	border-top: 10px solid;
+	border-left: 10px solid;
+}
+
+#bottom-left {
+	border-right: 10px solid;
+	border-top: 10px solid;
+}
+
+#bottom-mid {
+	border-top: 10px solid;
+	border-right: 10px solid;
+	border-left: 10px solid;
+}
+
+#bottom-right {
+	border-top: 10px solid;
+	border-left: 10px solid;
+}
