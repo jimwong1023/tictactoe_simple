@@ -1,6 +1,12 @@
 TicTacToe::Application.routes.draw do
 
   root 'static_pages#home'
+
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :players, only: [:new, :create]
+
+  delete '/signout', to: 'sessions#destroy'
+  get '/move', to: 'games#move'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

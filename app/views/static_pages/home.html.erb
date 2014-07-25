@@ -1,3 +1,17 @@
-<p id='token' class='hidden'><span>X</span></p>
+<h1>Welcome to Tic Tac Toe!</h1>
 
-<%= render 'shared/gameboard' %>
+<% if signed_in? %>
+	<h3>Hi <%= current_user.name %></h3>
+	<%= link_to "Sign out", signout_path, method: "delete" %>
+
+	<p id='token' class='hidden'><span>X</span></p>
+
+	<%= render 'shared/gameboard' %>
+
+<% else %>
+
+	<%= render 'signin' %>
+
+	<%= render 'signup' %>
+<% end %>
+

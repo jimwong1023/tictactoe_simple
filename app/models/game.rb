@@ -4,10 +4,12 @@ class Game < ActiveRecord::Base
 
   validate :has_exactly_two_players
 
-  def has_exactly_two_players
-    unless self.players.count == 2
-      errors.add(:game, "Must have only 2 players")
+  private
+
+    def has_exactly_two_players
+      unless self.players.count == 2
+        errors.add(:game, "Must have only 2 players")
+      end
     end
-  end
 
 end
