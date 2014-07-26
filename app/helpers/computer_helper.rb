@@ -3,7 +3,7 @@ module ComputerHelper
                ['mid-left','mid-mid','mid-right'],
                ['bottom-left','bottom-mid','bottom-right']]
 
-  def computer_move(computer_token, board)
+  def computer_move(board)
     move = ""
 
     while move == ""

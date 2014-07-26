@@ -1,30 +1,21 @@
 $(document).ready(function() {
   var legalMoves = []
   var token = $('#token').text()
-  var human = ""
-  var computer = ""
 
-  if (!confirm('Do you want to go first?')) {
-    computer = token
-    human = "O"
-    computerMove(legalMoves, token)
-  }
+  $('.square').mouseover(function() {
+    temp_fill($(this).find('p'), token)
+  })
 
-  else {
-    human = token
-    computer = "O"
-    humanMove(token)
-  }
+  $('.square').mouseout(function() {
+    undo_temp_fill($(this).find('p'))
+  })
+
+  $('.square').click(function() {
+    fill_square($(this).find('p'))
+    token = $('#token').text()
+    computerMove(legalMoves)
+  })
 });
-
-function flip_token() {
-  if ($('#token').text() == 'X') {
-    $('#token').text('O'); 
-  }
-  else {
-    $('#token').text('X');
-  }
-};
 
 function temp_fill(square, token) {
   if (!(square.hasClass('filled'))) {
@@ -41,59 +32,37 @@ function undo_temp_fill(square) {
 };
 
 function fill_square(square, token) {
-  console.log(square)
   if (!(square.hasClass('filled'))) {
     square.removeClass('temp_filled')
     square.addClass('filled')
     square.text(token)
-    flip_token()
     decide_outcome()
   }
 };
 
 function findLegalMoves(legalMoves) {
-  var table = document.getElementById("board");
-  for ( var i = 0, row; row = table.rows[i]; i++) {
-    legalMoves[i] = []
-    for (var j = 0, col; col = row.cells[j]; j++) {
-      if ( col.innerHTML === "<p></p>" ) {
-        legalMoves[i].push("")
-      }
-      else if ( col.innerHTML === "<p>X</p>" ) {
-        legalMoves[i].push('X')
-      }
-      else if ( col.innerHTML === "<p>O</p>") {
-        legalMoves[i].push('O')
-      }
-    }
-  }
+  $('#board tr').each(function(i) {
+      legalMoves[i] = []
+    $(this).find('td').each(function() {
+      legalMoves[i].push($(this).find('p').text())
+    })
+  })
 };
 
-function computerMove(legalMoves, token) {
+function computerMove(legalMoves) {
   findLegalMoves(legalMoves)
     $.ajax({
       url: '/move',
       type: 'get',
-      data: { "board": legalMoves, "computer_token": $('#token').text() }
+      data: { "board": legalMoves }
     }).done( function(result) { 
-      fill_square($('#' + result[0]).find('p'), token)
-      token = $('#token').text()
+      console.log("SUCCESS")
+      fill_square($('#' + result[0]).find('p'), result[1])
     })
 }
 
 function humanMove(token) {
-  $('.square').mouseover(function() {
-    temp_fill($(this).find('p'), token)
-  })
-
-  $('.square').mouseout(function() {
-    undo_temp_fill($(this).find('p'))
-  })
-
-  $('.square').click(function() {
-    fill_square($(this).find('p'))
-    token = $('#token').text()
-  })
+  
 }
 
 function decide_outcome() {
