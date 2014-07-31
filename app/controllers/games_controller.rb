@@ -7,4 +7,11 @@ class GamesController < ApplicationController
     render json: data
   end
 
+  def outcome
+    board = format_board(params[:board])
+    binding.pry
+    data = []
+    render json: data
+  end
+
 end

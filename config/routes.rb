@@ -7,6 +7,7 @@ TicTacToe::Application.routes.draw do
 
   delete '/signout', to: 'sessions#destroy'
   get '/move', to: 'games#move'
+  get '/outcome', to: 'games#ouctome'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
