@@ -25,18 +25,6 @@ Game.prototype.bindEvents = function (playBoard) {
       });
     }
   });
-  // $('.square').mouseover(function() {
-  //   self.tempFill($(this).find('p'));
-  // });
-
-  // $('.square').mouseout(function() {
-  //   self.undoTempFill($(this).find('p'));
-  // });
-
-  // $('.square').click(function() {
-  //   self.fillSquare($(this).find('p'), playBoard);
-  //   self.fillSquare($('#' + self.computerMove(playBoard)).find('p'), playBoard, 'O');
-  // });
 }
 
 Game.prototype.unBindEvents = function (square, playBoard) {
@@ -85,7 +73,6 @@ Game.prototype.computerMove = function (playBoard) {
                ['mid-left','mid-mid','mid-right'],
                ['bottom-left','bottom-mid','bottom-right']];
 
-  var move = "";
 
   for ( var i = 0; i < this.board.state.length; i++ ) {
     for ( var j = 0; j < this.board.state[i].length; j++ ) {
@@ -93,9 +80,7 @@ Game.prototype.computerMove = function (playBoard) {
         this.board.state[i][j] = "O";
         if ( this.board.isThereWinner() === "O" ) {
           this.board.state[i][j] = "";
-          move = POSITIONS[i][j];
-          console.log("SELF MOVE" + move);
-          return move;
+          return POSITIONS[i][j];
         }
         this.board.state[i][j] = "";
       }
@@ -108,23 +93,24 @@ Game.prototype.computerMove = function (playBoard) {
         this.board.state[i][j] = "X";
         if ( this.board.isThereWinner() === "X" ) {
           this.board.state[i][j] = "";
-          move = POSITIONS[i][j];
-          console.log("HUMAN BLOCK" + move);
-          return move;
+          return POSITIONS[i][j];
         }
         this.board.state[i][j] = "";
       }
     }
   }
 
-  while ( move === "") {
+  if ( this.board.state[1][1] === "" && Math.round(Math.random()) === 1 ) {
+    return POSITIONS[1][1]
+  }
+
+  while ( true ) {
     var randRow = Math.round(Math.random()*2);
     var randCol = Math.round(Math.random()*2);
     if ( this.board.state[randRow][randCol] === "") {
-      move = POSITIONS[randRow][randCol];
+      return POSITIONS[randRow][randCol];
     }
   }
-  return move
 }
 
 Game.prototype.decideOutcome = function (playBoard) {
