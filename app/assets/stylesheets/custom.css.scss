@@ -1,5 +1,8 @@
 /* General */
 * { font-family: sans-serif !important }
+html, body {
+	width: 100%;
+}
 
 h1 {
 	text-align: center;
@@ -14,8 +17,8 @@ h1 {
 #board {
 	width: 600px;
 	height: 600px;
-	margin-left: 500px;
-	margin-top: 40px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .square {
