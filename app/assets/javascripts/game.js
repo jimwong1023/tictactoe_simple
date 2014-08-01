@@ -16,7 +16,7 @@ Game.prototype.bindEvents = function (playBoard) {
 
   $('.square').click(function() {
     self.fillSquare($(this).find('p'), playBoard);
-    self.computerMove(playBoard);
+    self.fillSquare($('#' + self.computerMove(playBoard)).find('p'), playBoard, 'O');
   });
 }
 
@@ -58,6 +58,36 @@ Game.prototype.computerMove = function (playBoard) {
 
   var move = "";
 
+  for ( var i = 0; i < this.board.state.length; i++ ) {
+    for ( var j = 0; j < this.board.state[i].length; j++ ) {
+      if ( this.board.state[i][j] === "" ) {
+        this.board.state[i][j] = "O";
+        if ( this.board.isThereWinner() === "O" ) {
+          this.board.state[i][j] = "";
+          move = POSITIONS[i][j];
+          console.log("SELF MOVE" + move)
+          return move
+        }
+        this.board.state[i][j] = ""
+      }
+    }
+  }
+
+  for ( var i = 0; i < this.board.state.length; i++ ) {
+    for ( var j = 0; j < this.board.state[i].length; j++ ) {
+      if ( this.board.state[i][j] === "" ) {
+        this.board.state[i][j] = "X";
+        if ( this.board.isThereWinner() === "X" ) {
+          this.board.state[i][j] = "";
+          move = POSITIONS[i][j];
+          console.log("HUMAN MOVE" + move)
+          return move;
+        }
+        this.board.state[i][j] = ""
+      }
+    }
+  }
+
   while ( move === "") {
     var randRow = Math.round(Math.random()*2);
     var randCol = Math.round(Math.random()*2);
@@ -65,7 +95,7 @@ Game.prototype.computerMove = function (playBoard) {
       move = POSITIONS[randRow][randCol];
     }
   }
-  this.fillSquare($('#' + move).find('p'), playBoard, 'O');
+  return move
 }
 
 Game.prototype.decideOutcome = function (playBoard) {
@@ -119,7 +149,9 @@ Board.prototype.updateBoardState = function (playBoard) {
 Board.prototype.isThereWinner = function () {
   for ( var i = 0; i < this.winConditions.length; i++ ) {
     var checkArray = [];
+    var checkTie = [];
     for ( var j = 0; j < this.winConditions[i].length; j++ ) {
+      checkArray.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
       checkArray.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
     }
     if ( checkArray[0] === checkArray[1] && checkArray[1] === checkArray[2] && checkArray[0] != "" ) {
@@ -136,120 +168,3 @@ $(document).ready(function () {
 
   var game = new Game(playBoard);
 });
-
-// var board = [];
-// $(document).ready(function() {
-  
-
-//   $('.square').mouseover(function() {
-    // var xcord = $(this).attr('xcord');
-    // var ycord = $(this).attr('ycord');
-    // xcord = +xcord;
-    // ycord = +ycord;
-//     temp_fill($(this).find('p'), 'X')
-//   })
-
-//   $('.square').mouseout(function() {
-//     undo_temp_fill($(this).find('p'))
-//   })
-
-//   $('.square').click(function() {
-//     fill_square($(this).find('p'))
-//     computerMove()
-//   })
-// });
-
-// function temp_fill(square, token) {
-//   if (!(square.hasClass('filled'))) {
-//     square.text(token)
-//     square.addClass('temp_filled')
-//   }
-// };
-
-// function undo_temp_fill(square) {
-//   if (!(square.hasClass('filled'))) {
-//     square.text('')
-//     square.removeClass('temp_filled')
-//   }
-// };
-
-// function fill_square(square, token) {
-//   if (!(square.hasClass('filled'))) {
-//     square.removeClass('temp_filled')
-//     square.addClass('filled')
-//     square.text(token)
-//     decide_outcome(board)
-//   }
-// };
-
-// function updateBoardState() {
-//   $('#board tr').each(function(i) {
-//       board[i] = []
-//     $(this).find('td').each(function() {
-//       board[i].push($(this).find('p').text())
-//     })
-//   })
-// };
-
-// function computerMove() {
-//   updateBoardState()
-//   $.ajax({
-//     url: '/move',
-//     type: 'get',
-//     data: { "board": board}
-//   }).done( function(result) { 
-//     console.log("SUCCESS");
-//     fill_square($('#' + result[0]).find('p'), result[1])
-//   })
-// };
-
-// function decide_outcome(board) {
-//   // updateBoardState(board)
-//   // $.ajax({
-//   //   url: '/outcome',
-//   //   type: 'get',
-//   //   data: { "board": board }
-//   // }).done( function(result) {
-//   //   console.log("OUTCOME");
-//   // })
-// };
-
-// function three_item_equality(x, y, z) {
-//   if ((x === z && y === z) && (x != '') && (y != '') && (z != ''))
-//     return true
-//   else
-//     return false
-// }
-
-// function horizontal_victory() {
-//   if (three_item_equality($('#top-left').text(), $('#top-mid').text(), $('#top-right').text()) || three_item_equality($('#mid-left').text(), $('#mid-mid').text(), $('#mid-right').text()) || three_item_equality($('#bottom-left').text(), $('#bottom-mid').text(), $('#bottom-right').text()))
-//     return true
-//   else
-//     return false
-// }
-
-// function vertical_victory() {
-//   if (three_item_equality($('#top-left').text(), $('#mid-left').text(), $('#bottom-left').text()) || three_item_equality($('#top-mid').text(), $('#mid-mid').text(), $('#bottom-mid').text()) || three_item_equality($('#top-right').text(), $('#mid-right').text(), $('#bottom-right').text()))
-//     return true
-//   else
-//     return false
-// }
-
-// function diagonal_victory() {
-//   if (three_item_equality($('#top-left').text(), $('#mid-mid').text(), $('#bottom-right').text()) || three_item_equality($('#top-right').text(), $('#mid-mid').text(), $('#bottom-left').text()))
-//     return true
-//   else
-//     return false
-// }
-
-// function no_unfilled_squares() {
-//   if ($('.filled').length == 9)
-//     return true
-//   else
-//     return false
-// }
-
-// function mark_all_filled() {
-//   $('.square p').addClass('filled')
-// }
-
