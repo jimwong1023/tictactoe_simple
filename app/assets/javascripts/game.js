@@ -65,10 +65,10 @@ Game.prototype.computerMove = function (playBoard) {
         if ( this.board.isThereWinner() === "O" ) {
           this.board.state[i][j] = "";
           move = POSITIONS[i][j];
-          console.log("SELF MOVE" + move)
-          return move
+          console.log("SELF MOVE" + move);
+          return move;
         }
-        this.board.state[i][j] = ""
+        this.board.state[i][j] = "";
       }
     }
   }
@@ -80,10 +80,10 @@ Game.prototype.computerMove = function (playBoard) {
         if ( this.board.isThereWinner() === "X" ) {
           this.board.state[i][j] = "";
           move = POSITIONS[i][j];
-          console.log("HUMAN MOVE" + move)
+          console.log("HUMAN MOVE" + move);
           return move;
         }
-        this.board.state[i][j] = ""
+        this.board.state[i][j] = "";
       }
     }
   }
@@ -100,9 +100,13 @@ Game.prototype.computerMove = function (playBoard) {
 
 Game.prototype.decideOutcome = function (playBoard) {
   var winner = this.board.isThereWinner();
-  if (this.board.isThereWinner() != null) {
+  if ( winner === "X" || winner === "O" ) {
     alert(winner + " is the winner! The game will now restart.");
-    this.restart();
+    this.restart(playBoard);
+  }
+  else if ( winner === "TIE" ) {
+    alert("Tie Game! The game will now restart.");
+    this.restart(playBoard);
   }
 }
 
@@ -113,6 +117,7 @@ Game.prototype.restart = function (playBoard) {
       square.removeClass("filled").text("");
     }
   });
+  this.board.updateBoardState(playBoard);
 }
 
 /*
@@ -147,19 +152,24 @@ Board.prototype.updateBoardState = function (playBoard) {
 }
 
 Board.prototype.isThereWinner = function () {
+  var checkTie = [];
   for ( var i = 0; i < this.winConditions.length; i++ ) {
     var checkArray = [];
-    var checkTie = [];
     for ( var j = 0; j < this.winConditions[i].length; j++ ) {
       checkArray.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
-      checkArray.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
+      checkTie.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
     }
     if ( checkArray[0] === checkArray[1] && checkArray[1] === checkArray[2] && checkArray[0] != "" ) {
       return checkArray[0];
     }
     checkArray = [];
   }
-  return null;
+  if ( checkTie.indexOf("") === -1 ) {
+    return "TIE";
+  }
+  else {
+    return null;
+  }
 }
 
 $(document).ready(function () {
