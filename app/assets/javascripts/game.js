@@ -15,9 +15,8 @@ Game.prototype.bindEvents = function (playBoard) {
   });
 
   $('.square').click(function() {
-    self.fillSquare($(this).find('p'));
-    self.board.updateBoardState(playBoard);
-    self.computerMove();
+    self.fillSquare($(this).find('p'), playBoard);
+    self.computerMove(playBoard);
   });
 }
 
@@ -35,7 +34,7 @@ Game.prototype.undoTempFill = function (square) {
   }
 }
 
-Game.prototype.fillSquare = function (square, token) {
+Game.prototype.fillSquare = function (square, playBoard, token) {
   var self = this;
   if (!square.hasClass('filled')) {
     square.removeClass('temp_filled');
@@ -47,12 +46,12 @@ Game.prototype.fillSquare = function (square, token) {
     else {
       square.text('X');
     }
-
-    self.decideOutcome();
+    self.board.updateBoardState(playBoard);
+    self.decideOutcome(playBoard);
   }
 }
 
-Game.prototype.computerMove = function () {
+Game.prototype.computerMove = function (playBoard) {
   var POSITIONS = [['top-left','top-mid','top-right'],
                ['mid-left','mid-mid','mid-right'],
                ['bottom-left','bottom-mid','bottom-right']];
@@ -66,12 +65,24 @@ Game.prototype.computerMove = function () {
       move = POSITIONS[randRow][randCol];
     }
   }
-  this.fillSquare($('#' + move).find('p'), 'O');
-  this.decideOutcome();
+  this.fillSquare($('#' + move).find('p'), playBoard, 'O');
 }
 
-Game.prototype.decideOutcome = function () {
+Game.prototype.decideOutcome = function (playBoard) {
+  var winner = this.board.isThereWinner();
+  if (this.board.isThereWinner() != null) {
+    alert(winner + " is the winner! The game will now restart.");
+    this.restart();
+  }
+}
 
+Game.prototype.restart = function (playBoard) {
+  $(".square").each(function (i) {
+    var square = $(this).find('p')
+    if ( square.hasClass("filled") ) {
+      square.removeClass("filled").text("");
+    }
+  });
 }
 
 /*
@@ -85,6 +96,14 @@ Game.prototype.decideOutcome = function () {
 
 function Board () {
   this.state = [];
+  this.winConditions = [ [[0,0],[0,1],[0,2]],
+                         [[1,0],[1,1],[1,2]],
+                         [[2,0],[2,1],[2,2]],
+                         [[0,0],[1,0],[2,0]],
+                         [[0,1],[1,1],[2,1]],
+                         [[0,2],[1,2],[2,2]],
+                         [[0,0],[1,1],[2,2]],
+                         [[0,2],[1,1],[2,0]] ]
 }
 
 Board.prototype.updateBoardState = function (playBoard) {
@@ -93,12 +112,22 @@ Board.prototype.updateBoardState = function (playBoard) {
     self.state[i] = []
     $(this).find('td').each(function(){
       self.state[i].push($(this).find('p').text())
-    })
-  })
+    });
+  });
 }
 
 Board.prototype.isThereWinner = function () {
-  
+  for ( var i = 0; i < this.winConditions.length; i++ ) {
+    var checkArray = [];
+    for ( var j = 0; j < this.winConditions[i].length; j++ ) {
+      checkArray.push(this.state[this.winConditions[i][j][0]][this.winConditions[i][j][1]]);
+    }
+    if ( checkArray[0] === checkArray[1] && checkArray[1] === checkArray[2] && checkArray[0] != "" ) {
+      return checkArray[0];
+    }
+    checkArray = [];
+  }
+  return null;
 }
 
 $(document).ready(function () {
