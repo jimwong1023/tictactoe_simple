@@ -1,0 +1,122 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+ */
+
+/* General */
+/* line 3, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+* {
+  font-family: sans-serif !important;
+}
+
+/* line 5, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+h1 {
+  text-align: center;
+}
+
+/* line 9, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+.hidden {
+  display: none;
+}
+
+/* Board */
+/* line 15, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#board {
+  width: 600px;
+  height: 600px;
+  margin-left: 500px;
+  margin-top: 40px;
+}
+
+/* line 22, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+.square {
+  display: inline-block;
+  text-align: center;
+  line-height: 180px;
+  vertical-align: middle;
+  font-size: 140pt;
+  margin: 0;
+  padding: 0;
+  height: 180px;
+  width: 180px;
+}
+
+/* line 34, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#top-left {
+  border-bottom: 10px solid;
+  border-right: 10px solid;
+}
+
+/* line 39, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#top-mid {
+  border-bottom: 10px solid;
+  border-right: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 45, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#top-right {
+  border-bottom: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 50, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#mid-left {
+  border-bottom: 10px solid;
+  border-right: 10px solid;
+  border-top: 10px solid;
+}
+
+/* line 56, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#mid-mid {
+  border-bottom: 10px solid;
+  border-top: 10px solid;
+  border-right: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 63, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#mid-right {
+  border-bottom: 10px solid;
+  border-top: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 69, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#bottom-left {
+  border-right: 10px solid;
+  border-top: 10px solid;
+}
+
+/* line 74, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#bottom-mid {
+  border-top: 10px solid;
+  border-right: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 80, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+#bottom-right {
+  border-top: 10px solid;
+  border-left: 10px solid;
+}
+
+/* line 85, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+.temp_filled {
+  margin: 0;
+  color: #d1d0ce;
+}
+
+/* line 90, /Users/Jimbo/rails_projects/tictacs/app/assets/stylesheets/custom.css.scss */
+.filled {
+  margin: 0;
+}
