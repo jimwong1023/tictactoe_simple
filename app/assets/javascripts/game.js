@@ -100,7 +100,7 @@ Game.prototype.computerMove = function (playBoard) {
     }
   }
 
-  if ( this.board.state[1][1] === "" && Math.round(Math.random()) === 1 ) {
+  if ( this.board.state[1][1] === "" && Math.round(Math.random()) !== 1 ) {
     return POSITIONS[1][1]
   }
 
