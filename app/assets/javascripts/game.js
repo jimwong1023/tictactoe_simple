@@ -6,19 +6,47 @@ function Game (playBoard) {
 
 Game.prototype.bindEvents = function (playBoard) {
   var self = this;
-  $('.square').mouseover(function() {
-    self.tempFill($(this).find('p'));
-  });
 
-  $('.square').mouseout(function() {
-    self.undoTempFill($(this).find('p'));
-  });
+  playBoard.find('.square').each( function (i) {
+    if ( !$(this).hasClass('bound') ) {
+      $(this).addClass('bound');
 
-  $('.square').click(function() {
-    self.fillSquare($(this).find('p'), playBoard);
-    self.fillSquare($('#' + self.computerMove(playBoard)).find('p'), playBoard, 'O');
+      $(this).mouseover( function () {
+        self.tempFill($(this).find('p'));
+      });
+
+      $(this).mouseout( function () {
+        self.undoTempFill($(this).find('p'));
+      });
+
+      $(this).click( function () {
+        self.fillSquare($(this).find('p'), playBoard);
+        self.fillSquare($('#' + self.computerMove(playBoard)).find('p'), playBoard, 'O');
+      });
+    }
   });
+  // $('.square').mouseover(function() {
+  //   self.tempFill($(this).find('p'));
+  // });
+
+  // $('.square').mouseout(function() {
+  //   self.undoTempFill($(this).find('p'));
+  // });
+
+  // $('.square').click(function() {
+  //   self.fillSquare($(this).find('p'), playBoard);
+  //   self.fillSquare($('#' + self.computerMove(playBoard)).find('p'), playBoard, 'O');
+  // });
 }
+
+Game.prototype.unBindEvents = function (square, playBoard) {
+  var that = square.parent();
+  if ( that.hasClass('bound') ) {
+    that.removeClass('bound');
+
+    that.unbind();
+  }
+};
 
 Game.prototype.tempFill = function (square) {
   if (!square.hasClass('filled')) {
@@ -46,6 +74,7 @@ Game.prototype.fillSquare = function (square, playBoard, token) {
     else {
       square.text('X');
     }
+    self.unBindEvents(square, playBoard);
     self.board.updateBoardState(playBoard);
     self.decideOutcome(playBoard);
   }
@@ -80,7 +109,7 @@ Game.prototype.computerMove = function (playBoard) {
         if ( this.board.isThereWinner() === "X" ) {
           this.board.state[i][j] = "";
           move = POSITIONS[i][j];
-          console.log("HUMAN MOVE" + move);
+          console.log("HUMAN BLOCK" + move);
           return move;
         }
         this.board.state[i][j] = "";
@@ -117,6 +146,7 @@ Game.prototype.restart = function (playBoard) {
       square.removeClass("filled").text("");
     }
   });
+  this.bindEvents(playBoard);
   this.board.updateBoardState(playBoard);
 }
 
@@ -173,8 +203,9 @@ Board.prototype.isThereWinner = function () {
 }
 
 $(document).ready(function () {
-  var playBoard = $("#board")
- 
+  alert("Go ahead. Make the first move!");
 
+  var playBoard = $("#board");
+ 
   var game = new Game(playBoard);
 });
